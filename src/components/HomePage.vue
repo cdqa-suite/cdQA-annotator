@@ -4,13 +4,11 @@
       <AnnotationsPage v-bind:json="json"/>
     </div>
     <div v-else>
-      <h1>reading-comprehension-annotator</h1>
+      <h1>cdQA-annotator</h1>
       <hr>
-      <p>reading-comprehension-annotator is a tool made by  <a href="https://github.com/fmikaelian">@fmikaelian</a> to help you annotate reading comprehension datasets like 
-        <a href="https://rajpurkar.github.io/SQuAD-explorer/">Stanford Question Answering Dataset (SQuAD).</a> 
-        This tool has been developped to ease data labelling in the context of training custom reading comprehension models with algorithms such as 
-        <a href="https://github.com/huggingface/pytorch-pretrained-BERT/">BERT.</a>  To get started, upload a <code>.json</code> file in the following format 
-        where each article has been pre-cut into paragraphs:</p>
+      <p>cdQA-annotator a web-based annotator for closed-domain question answering datasets made by <a href="https://github.com/fmikaelian">@fmikaelian</a>.
+      To get started, upload a <code>.json</code> file with <a href="https://rajpurkar.github.io/SQuAD-explorer/"> (SQuAD) </a> format
+      where each document has been pre-cut into paragraphs:</p>
         <pre v-highlightjs>
           <code class="json">
   {

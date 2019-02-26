@@ -1,4 +1,4 @@
-# reading-comprehension-annotator
+# cdQA-annotator
 
 Install node:
 
@@ -9,24 +9,27 @@ brew install node
 Install vue and vue CLI:
 
 ```
-npm install -g vue @vue/cli
+npm install -g vue @vue/cli @vue/cli-service-global
 ```
 
 Clone the repository:
 
 ```
-git clone https://github.com/fmikaelian/reading-comprehension-annotator
+git clone https://github.com/fmikaelian/cdQA-annotator
 ```
 
 Install dependencies
 
 ```
-cd reading-comprehension-annotator
+cd cdQA-annotator
 npm install
 ```
 
-Open vue UI to manage the project:
+```
+cd src
+vue serve
+```
 
-```
-vue ui
-```
+The app should be running at http://localhost:8080/
+
+You can also use vue UI to manage the project.
