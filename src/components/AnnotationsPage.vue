@@ -66,7 +66,7 @@
       There are no more data to annotate. You can now download your annotated dataset:
       <br>
       <br>
-      <b-button :size="''" :variant="'primary'" v-download-data="JSON.stringify(json)" v-download-data:type="application/json">Download</b-button>
+      <b-button :size="''" :variant="'primary'" v-download-data="JSON.stringify(json)" v-download-data:type="'json'" v-download-data:filename="'cdqa-v1.1.json'">Download</b-button>
     </div>
   </div>
 </template>

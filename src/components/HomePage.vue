@@ -6,9 +6,9 @@
     <div v-else>
       <h1>cdQA-annotator</h1>
       <hr>
-      <p>cdQA-annotator a web-based annotator for closed-domain question answering datasets made by <a href="https://github.com/fmikaelian">@fmikaelian</a>.
-      To get started, upload a <code>.json</code> file with <a href="https://rajpurkar.github.io/SQuAD-explorer/"> (SQuAD) </a> format
-      where each document has been pre-cut into paragraphs:</p>
+      <p>cdQA-annotator a web-based annotator for closed-domain question answering datasets created by <a href="https://github.com/fmikaelian">@fmikaelian</a>.
+      It has been developped in the context of the <a href="https://github.com/fmikaelian/cdqa"> cdqa </a> project. To get started, upload a <code>.json</code> file with <a href="https://rajpurkar.github.io/SQuAD-explorer/"> SQuAD v1.1 </a> format
+      where each document in the corpus has been pre-cut into paragraphs (you can use <a href="https://github.com/fmikaelian/cdqa"> cdqa </a> helpers functions to create this dataset from a <code>.csv</code> file).</p>
         <pre v-highlightjs>
           <code class="json">
   {
