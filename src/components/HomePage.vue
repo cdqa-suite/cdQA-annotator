@@ -4,7 +4,7 @@
       <AnnotationsPage v-bind:json="json"/>
     </div>
     <div v-else>
-      <h1>cdQA-annotator</h1>
+      <h1><img src="../assets/doggoblob.png" class="d-inline-block align-top" height="45" width="45">   cdQA-annotator</h1>
       <hr>
       <p>cdQA-annotator a web-based annotator for closed-domain question answering datasets created by <a href="https://github.com/fmikaelian">@fmikaelian</a>.
       It has been developped in the context of the <a href="https://github.com/fmikaelian/cdqa"> cdqa </a> project. To get started, upload a <code>.json</code> file with <a href="https://rajpurkar.github.io/SQuAD-explorer/"> SQuAD v1.1 </a> format
@@ -15,7 +15,7 @@
       copyable></json-viewer>
       <br>
       <div class="uploadBar">
-        <b-form-file v-model="file" :state="Boolean(file)" placeholder="Upload a JSON file..." accept=".json"></b-form-file>
+      <b-form-file v-model="file" :state="Boolean(file)" placeholder="Upload a JSON file..." accept=".json"></b-form-file>
       </div>
       <br>
       <b-button :size="''" :variant="'primary'" v-on:click="uploadStatus(), readFile()">Upload</b-button>

@@ -10,9 +10,9 @@
   "dependencies": {
     "bootstrap-vue": "^2.0.0-rc.17",
     "filereader": "^0.10.3",
+    "svg-progress-bar": "^0.1.17",
     "v-download": "^1.2.0",
     "vue": "^2.6.10",
-    "vue-highlightjs": "^1.3.3",
     "vue-json-viewer": "^2.1.4",
     "vue-text-selection": "0.0.4"
   },
