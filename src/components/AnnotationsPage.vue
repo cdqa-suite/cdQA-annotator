@@ -91,12 +91,10 @@ export default {
       paragraph_container.qas.push(qa);
       this.question = '';
       this.answer = '';
-      this.$cookie.set('json', JSON.stringify(this.json), 1);
     },
     deleteAnnotation: function (row_index) {
       var paragraph_container = this.json.data[this.data_number - 1].paragraphs[this.context_number - 1]
       paragraph_container.qas.splice(row_index, 1);
-      this.$cookie.set('json', JSON.stringify(this.json), 1);
     },
     getSelection: function(fixStr, allStr) {
       this.answer = fixStr
