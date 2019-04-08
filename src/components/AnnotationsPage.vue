@@ -1,8 +1,42 @@
 <template>
-  <div class="AnnotationsPage container mt-3">
 
+  <div class="AnnotationsPage container mt-3">
+    <div>
+      <b-navbar sticky toggleable="lg">
+        
+        <b-navbar-brand>
+          <img src="../assets/doggoblob.png" class="d-inline-block align-top mr-2" height="30" width="30"> cdQA-annotator
+        </b-navbar-brand>
+
+        <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+
+        <b-collapse id="nav-collapse" is-nav>
+          <!-- Right aligned nav items -->
+          <b-navbar-nav class="ml-auto">
+            <b-nav-item>
+              <svg-progress-bar :value="data_number / json.data.length * 100" :options="options"></svg-progress-bar>
+            </b-nav-item>
+            <b-nav-form>
+              <b-form-input size="sm" class="mr-sm-2" placeholder="Search"></b-form-input>
+            </b-nav-form>
+            <b-nav-item right>
+              <b-button
+                :size="'sm'"
+                :variant="'primary'"
+                v-download-data="JSON.stringify(json)"
+                v-download-data:type="'json'"
+                v-download-data:filename="'cdqa-v1.1.json'">
+                Download
+              </b-button>
+            </b-nav-item>
+          </b-navbar-nav>
+        </b-collapse>
+
+      </b-navbar>
+    </div>
+    <br>
     <div v-if="data_number - 1 < json.data.length">
-      <h1>{{ json.data[data_number - 1].title }}</h1>
+      <h2>{{ json.data[data_number - 1].title }} <span class="text-muted">({{ context_number }}/{{ json.data[data_number - 1].paragraphs.length }})</span></h2>
       <br>
 
       <p ref="paragraph" v-selection.fix="{getSelection:getSelection}">{{ paragraph_context }}</p>
@@ -10,7 +44,7 @@
 
       <b-form-input v-model="question"
                     type="text"
-                    placeholder="Type question here"></b-form-input>
+                    placeholder="Type question here..."></b-form-input>
       <br>
 
       <b-form-input v-model="answer"
@@ -18,7 +52,7 @@
                     placeholder="Type answer here..."></b-form-input>
       <br>
 
-      <b-button :size="''" :variant="'success'" v-on:click="addAnnotation()">Add annotation</b-button>
+      <b-button :size="''" :variant="'secondary'" v-on:click="addAnnotation()">Add annotation</b-button>
       <br>
       <br>
 
@@ -31,26 +65,15 @@
 
       <div v-if="context_number < json.data[data_number - 1].paragraphs.length">
         <b-button :size="''" :variant="'success'" v-on:click="context_number += 1">Validate</b-button>
+        or
+        <b-button :size="''" :variant="'outline-secondary'" v-on:click="context_number += 1">Skip</b-button>
       </div>
       <div v-else>
         <b-button :size="''" :variant="'success'" v-on:click="data_number += 1, context_number = 1">Validate</b-button>
+        or
+        <b-button :size="''" :variant="'outline-secondary'" v-on:click="data_number += 1, context_number = 1">Skip</b-button>
       </div>
       <br>
-      <br>
-
-      Remaining documents:
-      <b-progress :max="json.data.length" class="w-25">
-        <b-progress-bar :value="data_number">
-          <strong>{{ data_number }} / {{ json.data.length }}</strong>
-        </b-progress-bar>
-      </b-progress>
-
-      Remaining paragraphs:
-      <b-progress :max="json.data[data_number - 1].paragraphs.length" class="w-25">
-        <b-progress-bar :value="context_number">
-          <strong>{{ context_number }} / {{ json.data[data_number - 1].paragraphs.length }}</strong>
-        </b-progress-bar>
-      </b-progress>
       <br>
 
       Switch to document:
@@ -91,12 +114,10 @@ export default {
       paragraph_container.qas.push(qa);
       this.question = '';
       this.answer = '';
-      this.$cookie.set('json', JSON.stringify(this.json), 1);
     },
     deleteAnnotation: function (row_index) {
       var paragraph_container = this.json.data[this.data_number - 1].paragraphs[this.context_number - 1]
       paragraph_container.qas.splice(row_index, 1);
-      this.$cookie.set('json', JSON.stringify(this.json), 1);
     },
     getSelection: function(fixStr, allStr) {
       this.answer = fixStr
@@ -117,6 +138,18 @@ export default {
     },
     answer_start: function () {
       return this.paragraph_context.indexOf(this.answer);
+    },
+    options () {
+      return {
+        radius: 15,
+        circleLineCap: 'round',
+        varyStrokeArray: [1,2],
+        pathColors: ['lightgrey', 'rgb(40, 167, 69)'],
+        text: function (value) {
+              return this.htmlifyNumber(value) + '<span style="font-size: 1em;">%</span>';
+            },
+        textColor: 'black',
+        }
     }
   }
 }
