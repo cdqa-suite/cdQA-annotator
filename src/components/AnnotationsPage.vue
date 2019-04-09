@@ -17,7 +17,20 @@
               <svg-progress-bar :value="data_number / json.data.length * 100" :options="options"></svg-progress-bar>
             </b-nav-item>
             <b-nav-form>
-              <b-form-input size="sm" class="mr-sm-2" placeholder="Search"></b-form-input>
+              <!-- <b-form-input size="sm" class="mr-sm-2" placeholder="Search"></b-form-input> -->
+              <vue-instant
+              :suggestOnAllWords="true"
+              :suggestion-attribute="suggestionAttribute"
+              v-model="value"
+              :disabled="false"
+              @input="changed"
+              :show-autocomplete="true"
+              :autofocus="false"
+              :suggestions="suggestions"
+              name="customName"
+              placeholder="custom placeholder"
+              type="google">
+              </vue-instant>
             </b-nav-form>
             <b-nav-item right>
               <b-button
@@ -95,6 +108,29 @@
 </template>
 
 <script>
+
+import lunr from 'lunr'
+
+var documents = [{
+  "name": "Lunr",
+  "text": "Like Solr, but much smaller, and not as bright."
+}, {
+  "name": "Lodash not cool",
+  "text": "A JavaScript library for building user interfaces."
+}, {
+  "name": "Lodash cool",
+  "text": "A modern JavaScript utility library delivering modularity, performance & extras."
+}]
+
+var idx = lunr(function () {
+  this.ref('name')
+  this.field('name')
+
+  documents.forEach(function (doc) {
+    this.add(doc)
+  }, this)
+})
+
 export default {
   name: 'AnnotationsPage',
   props: ['json'],
@@ -105,6 +141,9 @@ export default {
       question: '',
       answer: '',
       fields: ['Questions', 'Answers', 'Edit'],
+      value: '',
+      suggestionAttribute: 'ref',
+      suggestions: []
     }
   },
   methods: {
@@ -121,7 +160,14 @@ export default {
     },
     getSelection: function(fixStr, allStr) {
       this.answer = fixStr
-    }
+    },
+    changed: function() {
+        var that = this
+        this.suggestions = []
+        idx.search(this.value).forEach(function(a) {
+            that.suggestions.push(a)
+        })
+    },
   },
   computed: {
     items: function () {
