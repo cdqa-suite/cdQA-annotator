@@ -8,11 +8,12 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "bootstrap-vue": "^2.0.0-rc.17",
+    "bootstrap-vue": "^2.0.0-rc.19",
     "filereader": "^0.10.3",
     "svg-progress-bar": "^0.1.17",
     "v-download": "^1.2.0",
     "vue": "^2.6.10",
+    "vue-bootstrap-typeahead": "^0.2.6",
     "vue-json-viewer": "^2.1.4",
     "vue-text-selection": "0.0.4"
   },
