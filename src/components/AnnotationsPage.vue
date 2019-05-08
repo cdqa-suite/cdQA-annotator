@@ -17,7 +17,7 @@
               <svg-progress-bar :value="data_number / json.data.length * 100" :options="options"></svg-progress-bar>
             </b-nav-item>
             <b-nav-form>
-              <b-form-input size="sm" class="mr-sm-2" placeholder="Search"></b-form-input>
+              <vue-bootstrap-typeahead v-model="query" :data="autocomplete" placeholder="Search a document..." @hit="data_number = autocomplete.indexOf($event) + 1; context_number = 1"/>
             </b-nav-form>
             <b-nav-item right>
               <b-button
@@ -105,6 +105,7 @@ export default {
       question: '',
       answer: '',
       fields: ['Questions', 'Answers', 'Edit'],
+      query: '',
     }
   },
   methods: {
@@ -124,6 +125,13 @@ export default {
     }
   },
   computed: {
+    autocomplete: function () {
+      var idx = [];
+      for (var i = 0; i < this.json.data.length; i++) {
+        idx.push(this.json.data[i].title);
+      }
+      return idx
+    },
     items: function () {
       var paragraph_container = this.json.data[this.data_number - 1].paragraphs[this.context_number - 1]
       var items = [];
