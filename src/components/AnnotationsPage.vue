@@ -36,9 +36,10 @@
     </div>
     <br>
     <div v-if="data_number - 1 < json.data.length">
-      <h2>{{ json.data[data_number - 1].title }} <span class="text-muted">({{ context_number }}/{{ json.data[data_number - 1].paragraphs.length }})</span></h2>
+      <h2>{{ json.data[data_number - 1].title }}</h2>
+      <span class="text-muted">Paragraph {{ context_number }} of {{ json.data[data_number - 1].paragraphs.length }} | Document {{ data_number }} of {{ json.data.length }}</span>
       <br>
-
+      <br>
       <p ref="paragraph" v-selection.fix="{getSelection:getSelection}">{{ paragraph_context }}</p>
       <br>
 
@@ -63,25 +64,22 @@
       </b-table>
       <br>
 
-      <div v-if="context_number < json.data[data_number - 1].paragraphs.length">
-        <b-button :size="''" :variant="'success'" v-on:click="context_number += 1">Validate</b-button>
+      <div v-if="data_number > 1 && context_number == 1">
+        <b-button :size="''" :variant="'secondary'" v-on:click="data_number -= 1, context_number = json.data[data_number - 1].paragraphs.length">Special</b-button>
         or
-        <b-button :size="''" :variant="'outline-secondary'" v-on:click="context_number += 1">Skip</b-button>
+        <b-button :size="''" :variant="'primary'" v-on:click="context_number += 1">Next</b-button>
+      </div>
+      <div v-else-if="context_number < json.data[data_number - 1].paragraphs.length">
+        <b-button :size="''" :variant="'outline-secondary'" v-on:click="context_number -= 1">Previous</b-button>
+        or
+        <b-button :size="''" :variant="'outline-primary'" v-on:click="context_number += 1">Next</b-button>
       </div>
       <div v-else>
-        <b-button :size="''" :variant="'success'" v-on:click="data_number += 1, context_number = 1">Validate</b-button>
+        <b-button :size="''" :variant="'outline-secondary'" v-on:click="context_number -= 1">Previous</b-button>
         or
-        <b-button :size="''" :variant="'outline-secondary'" v-on:click="data_number += 1, context_number = 1">Skip</b-button>
+        <b-button :size="''" :variant="'outline-primary'" v-on:click="data_number += 1, context_number = 1">Next</b-button>
       </div>
       <br>
-      <br>
-
-      Switch to document:
-      <b-pagination size="md" :total-rows="json.data.length" v-model="data_number" :per-page="1">
-      </b-pagination>
-      Switch to paragraph:
-      <b-pagination size="md" :total-rows="json.data.length" v-model="context_number" :per-page="1">
-      </b-pagination>
       <br>
 
     </div>
