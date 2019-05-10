@@ -23,7 +23,7 @@
               <b-button
                 :size="'sm'"
                 :variant="'primary'"
-                v-download-data="JSON.stringify(json)"
+                v-download-data="valid_json"
                 v-download-data:type="'json'"
                 v-download-data:filename="'cdqa-v1.1.json'">
                 Download
@@ -36,9 +36,10 @@
     </div>
     <br>
     <div v-if="data_number - 1 < json.data.length">
-      <h2>{{ json.data[data_number - 1].title }} <span class="text-muted">({{ context_number }}/{{ json.data[data_number - 1].paragraphs.length }})</span></h2>
+      <h2>{{ json.data[data_number - 1].title }}</h2>
+      <span class="text-muted">Paragraph {{ context_number }} of {{ json.data[data_number - 1].paragraphs.length }} | Document {{ data_number }} of {{ json.data.length }}</span>
       <br>
-
+      <br>
       <p ref="paragraph" v-selection.fix="{getSelection:getSelection}">{{ paragraph_context }}</p>
       <br>
 
@@ -63,25 +64,22 @@
       </b-table>
       <br>
 
-      <div v-if="context_number < json.data[data_number - 1].paragraphs.length">
-        <b-button :size="''" :variant="'success'" v-on:click="context_number += 1">Validate</b-button>
+      <div v-if="data_number > 1 && context_number == 1">
+        <b-button :size="''" :variant="'outline-secondary'" v-on:click="data_number -= 1, context_number = json.data[data_number - 1].paragraphs.length">Previous</b-button>
         or
-        <b-button :size="''" :variant="'outline-secondary'" v-on:click="context_number += 1">Skip</b-button>
+        <b-button :size="''" :variant="'outline-primary'" v-on:click="context_number += 1">Next</b-button>
+      </div>
+      <div v-else-if="context_number < json.data[data_number - 1].paragraphs.length">
+        <b-button :size="''" :variant="'outline-secondary'" v-on:click="context_number -= 1">Previous</b-button>
+        or
+        <b-button :size="''" :variant="'outline-primary'" v-on:click="context_number += 1">Next</b-button>
       </div>
       <div v-else>
-        <b-button :size="''" :variant="'success'" v-on:click="data_number += 1, context_number = 1">Validate</b-button>
+        <b-button :size="''" :variant="'outline-secondary'" v-on:click="context_number -= 1">Previous</b-button>
         or
-        <b-button :size="''" :variant="'outline-secondary'" v-on:click="data_number += 1, context_number = 1">Skip</b-button>
+        <b-button :size="''" :variant="'outline-primary'" v-on:click="data_number += 1, context_number = 1">Next</b-button>
       </div>
       <br>
-      <br>
-
-      Switch to document:
-      <b-pagination size="md" :total-rows="json.data.length" v-model="data_number" :per-page="1">
-      </b-pagination>
-      Switch to paragraph:
-      <b-pagination size="md" :total-rows="json.data.length" v-model="context_number" :per-page="1">
-      </b-pagination>
       <br>
 
     </div>
@@ -89,7 +87,7 @@
       There are no more data to annotate. You can now download your annotated dataset:
       <br>
       <br>
-      <b-button :size="''" :variant="'primary'" v-download-data="JSON.stringify(json)" v-download-data:type="'json'" v-download-data:filename="'cdqa-v1.1.json'">Download</b-button>
+      <b-button :size="''" :variant="'primary'" v-download-data="valid_json" v-download-data:type="'json'" v-download-data:filename="'cdqa-v1.1.json'">Download</b-button>
     </div>
   </div>
 </template>
@@ -125,6 +123,12 @@ export default {
     }
   },
   computed: {
+    valid_json: function () {
+      var json = JSON.stringify(this.json).replace(/[\u007F-\uFFFF]/g, function(chr) {
+          return "\\u" + ("0000" + chr.charCodeAt(0).toString(16)).substr(-4)
+      })
+      return json
+    },
     autocomplete: function () {
       var idx = [];
       for (var i = 0; i < this.json.data.length; i++) {
