@@ -10,6 +10,7 @@
   "dependencies": {
     "bootstrap-vue": "^2.0.0-rc.19",
     "filereader": "^0.10.3",
+    "font-awesome": "^4.7.0",
     "svg-progress-bar": "^0.1.17",
     "v-download": "^1.2.0",
     "vue": "^2.6.10",

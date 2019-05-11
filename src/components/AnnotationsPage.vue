@@ -17,12 +17,13 @@
               <svg-progress-bar :value="data_number / json.data.length * 100" :options="options"></svg-progress-bar>
             </b-nav-item>
             <b-nav-form>
-              <vue-bootstrap-typeahead v-model="query" :data="autocomplete" placeholder="Search a document..." @hit="data_number = autocomplete.indexOf($event) + 1; context_number = 1"/>
+              <vue-bootstrap-typeahead size="sm" v-model="query" :data="autocomplete" placeholder="Search a document..." @hit="data_number = autocomplete.indexOf($event) + 1; context_number = 1"/>
             </b-nav-form>
             <b-nav-item right>
               <b-button
                 :size="'sm'"
                 :variant="'primary'"
+                v-on:click="delete_empty_document()"
                 v-download-data="valid_json"
                 v-download-data:type="'json'"
                 v-download-data:filename="'cdqa-v1.1.json'">
@@ -54,6 +55,9 @@
       <br>
 
       <b-button :size="''" :variant="'secondary'" v-on:click="addAnnotation()">Add annotation</b-button>
+      or
+      <b-button v-if="context_number < json.data[data_number - 1].paragraphs.length" :size="''" :variant="'danger'" v-on:click="delete_paragraph()">Delete paragraph</b-button>
+      <b-button v-else :size="''" :variant="'danger'" v-on:click="delete_paragraph(), data_number += 1, context_number = 1">Delete paragraph</b-button>
       <br>
       <br>
 
@@ -84,10 +88,10 @@
 
     </div>
     <div v-else>
-      There are no more data to annotate. You can now download your annotated dataset:
+      There are no more data to annotate. You can now download your annotated dataset <img src="../assets/ablobmaracas.gif" height="30" width="30">
       <br>
       <br>
-      <b-button :size="''" :variant="'primary'" v-download-data="valid_json" v-download-data:type="'json'" v-download-data:filename="'cdqa-v1.1.json'">Download</b-button>
+      <b-button :size="''" :variant="'primary'" v-on:click="delete_empty_document()" v-download-data="valid_json" v-download-data:type="'json'" v-download-data:filename="'cdqa-v1.1.json'">Download</b-button>
     </div>
   </div>
 </template>
@@ -120,6 +124,17 @@ export default {
     },
     getSelection: function(fixStr, allStr) {
       this.answer = fixStr
+    },
+    delete_paragraph: function () {
+      var paragraph_container = this.json.data[this.data_number - 1].paragraphs
+      paragraph_container.splice([this.context_number - 1], 1)
+    },
+    delete_empty_document: function () {
+      for (var i in this.json.data) {
+        if (this.json.data[i].paragraphs.length == 0) {
+          this.json.data.splice(i, 1)
+        }
+      }
     }
   },
   computed: {
