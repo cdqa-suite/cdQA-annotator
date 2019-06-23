@@ -15,7 +15,7 @@ npm install -g vue @vue/cli @vue/cli-service-global
 Clone the repository:
 
 ```
-git clone https://github.com/fmikaelian/cdQA-annotator
+git clone https://github.com/cdqa-suite/cdQA-annotator
 ```
 
 Install dependencies
