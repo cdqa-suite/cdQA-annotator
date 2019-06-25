@@ -1,6 +1,6 @@
 # cdQA-annotator
 
-![GitHub](https://img.shields.io/github/license/cdqa-suite/cdqa-annotator.svg)
+![GitHub](https://img.shields.io/github/license/cdqa-suite/cdQA-annotator.svg)
 
 A web-based annotator for closed-domain question answering datasets with SQuAD format
 
