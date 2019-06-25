@@ -1,35 +1,29 @@
 # cdQA-annotator
 
-Install node:
+![GitHub](https://img.shields.io/github/license/cdqa-suite/cdqa-annotator.svg)
 
-```
-brew install node
-```
+A web-based annotator for closed-domain question answering datasets with SQuAD format
 
-Install vue and vue CLI:
-
-```
-npm install -g vue @vue/cli @vue/cli-service-global
-```
+![](https://cdqa-suite.github.io/cdQA-website/img/suite-3.5c84e524.png)
 
 Clone the repository:
 
-```
+```shell
 git clone https://github.com/cdqa-suite/cdQA-annotator
 ```
 
 Install dependencies
 
-```
+```shell
 cd cdQA-annotator
 npm install
 ```
 
-```
+Start development server
+
+```shell
 cd src
 vue serve
 ```
 
 The app should be running at http://localhost:8080/
-
-You can also use vue UI to manage the project.
