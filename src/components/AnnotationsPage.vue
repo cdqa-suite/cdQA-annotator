@@ -128,6 +128,9 @@
 </template>
 
 <script>
+
+const uuidv4 = require('uuid/v4');
+
 export default {
   name: "AnnotationsPage",
   props: ["json"],
@@ -148,6 +151,7 @@ export default {
       ];
       var qa = {
         question: this.question,
+        id: uuidv4(),
         answers: [{ answer_start: this.answer_start, text: this.answer }]
       };
       paragraph_container.qas.push(qa);
