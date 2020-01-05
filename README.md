@@ -22,8 +22,7 @@ npm install
 Start development server
 
 ```shell
-cd src
-vue serve
+npm run serve
 ```
 
 The app should be running at http://localhost:8080/
