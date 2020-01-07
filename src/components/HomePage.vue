@@ -73,12 +73,13 @@ export default {
   },
   methods: {
     uploadStatus: function() {
-      this.fileUploaded = true;
+      //this.fileUploaded = true;
     },
     readFile: function() {
       var reader = new FileReader();
       reader.onload = function(event) {
         this.json = JSON.parse(event.target.result);
+        this.fileUploaded = true;
       }.bind(this);
       reader.readAsText(this.file);
     }
