@@ -164,7 +164,7 @@ export default {
       ];
       paragraph_container.qas.splice(row_index, 1);
     },
-    getSelection: function(fixStr, allStr) {
+    getSelection: function(fixStr) {
       this.answer = fixStr;
     },
     delete_paragraph: function() {
