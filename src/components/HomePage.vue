@@ -31,7 +31,7 @@
         ></b-form-file>
       </div>
       <br>
-      <b-button :size="''" :variant="'primary'" v-on:click="uploadStatus(), readFile()">Upload</b-button>
+      <b-button :size="''" :variant="'primary'" v-on:click="readFile()">Upload</b-button>
     </div>
   </div>
 </template>
@@ -72,9 +72,6 @@ export default {
     };
   },
   methods: {
-    uploadStatus: function() {
-      //this.fileUploaded = true;
-    },
     readFile: function() {
       var reader = new FileReader();
       reader.onload = function(event) {
